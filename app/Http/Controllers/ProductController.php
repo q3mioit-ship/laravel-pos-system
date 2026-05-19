@@ -30,11 +30,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Producoct::create([
-        'name' => $request->name,
-        'stock' => $request->stock,
-        'cost_price' => $request->cost_price,
-        'sale_price' => $request->sale_price,
+        $request->validate([
+            'name' => 'required',
+            'stock' => 'required|integer',
+            'cost_price' => 'required|integer',
+            'sale_price' => 'required|integer',
+        ]);
+        Product::create([
+            'name' => $request->name,
+            'stock' => $request->stock,
+            'cost_price' => $request->cost_price,
+            'sale_price' => $request->sale_price,
         ]);
 
         return redirect('/products');
@@ -43,32 +49,57 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return view('products.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return view('products.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'stock' => 'required|integer',
+            'cost_price' => 'required|integer',
+            'sale_price' => 'required|integer',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'name' => $request->name,
+            'stock' => $request->stock,
+            'cost_price' => $request->cost_price,
+            'sale_price' => $request->sale_price,
+        ]);
+
+        return redirect('/products/' . $product->id);
+
     }
 
     /**
      * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+     */ 
+    public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $product->delete();
+
+        return redirect('/products');
     }
 }
