@@ -1,7 +1,11 @@
-<h1>商品一覧</h1>
+@extends('layouts.app')
 
-<a href="/products/create">商品登録</a>
+@section('content')
+
+<h2>商品一覧</h2>
 
 @foreach($products as $product)
     <p>{{ $product->name }}</p>
 @endforeach
+
+@endsection
