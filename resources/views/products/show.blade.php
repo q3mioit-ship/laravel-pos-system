@@ -4,7 +4,7 @@
 
 <div class="max-w-2xl mx-auto">
 
-    <div class="bg-white shadow rounded-2xl p-8">
+    <x-card>
 
         <div class="flex justify-between items-start mb-6">
 
@@ -87,8 +87,8 @@
             </form>
 
         </div>
+    </x-card>
 
-    </div>
 
 </div>
 

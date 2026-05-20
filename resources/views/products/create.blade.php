@@ -2,95 +2,96 @@
 
 @section('content')
 
-<h2 class="text-2xl font-bold mb-6">
-    商品登録
-</h2>
+<div class="max-w-2xl mx-auto">
 
-@if ($errors->any())
+    <x-card>
 
-    <div class="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-6">
+        <h1 class="text-2xl font-bold mb-6">
+            商品登録
+        </h1>
 
-        <ul class="list-disc pl-5">
+    @if ($errors->any())
 
-            @foreach ($errors->all() as $error)
+        <div class="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-6">
 
-                <li>{{ $error }}</li>
+            <ul class="list-disc pl-5">
 
-            @endforeach
+                @foreach ($errors->all() as $error)
 
-        </ul>
+                    <li>{{ $error }}</li>
 
-    </div>
+                @endforeach
 
-@endif
+            </ul>
 
-<form action="/products" method="POST" class="space-y-6">
+        </div>
 
-    @csrf
+    @endif
 
-    <div>
+        <form action="/products" method="POST" class="space-y-6">
 
-        <label class="block font-semibold mb-2">
-            商品名
-        </label>
+            @csrf
 
-        <x-input
-            type="text"
-            name="name"
-            value="{{ old('name') }}"
-        />
+            <x-form-group
+                label="商品名"
+                field="name"
+            >
 
-    </div>
+                <x-input
+                    type="text"
+                    name="name"
+                    value="{{ old('name') }}"
+                />
 
-    <div>
+            </x-form-group>
+            <x-form-group
+                label="在庫数"
+                field="stock"
+            >
 
-        <label class="block font-semibold mb-2">
-            在庫数
-        </label>
+                <x-input
+                    type="number"
+                    name="stock"
+                    value="{{ old('stock') }}"
+                />
 
-        <x-input
-            type="number"
-            name="stock"
-            value="{{ old('stock') }}"
-        />
+            </x-form-group>
 
-    </div>
+            <x-form-group
+                label="仕入価格"
+                field="cost_price"
+            >
 
-    <div>
+                <x-input
+                    type="number"
+                    name="cost_price"
+                    value="{{ old('cost_price') }}"
+                />
 
-        <label class="block font-semibold mb-2">
-            仕入価格
-        </label>
+            </x-form-group>
 
-        <x-input
-            type="number"
-            name="cost_price"
-            value="{{ old('cost_price') }}"
-        />
+            <x-form-group
+                label="販売価格"
+                field="sale_price"
+            >
 
-    </div>
+                <x-input
+                    type="number"
+                    name="sale_price"
+                    value="{{ old('sale_price') }}"
+                />
 
-    <div>
+            </x-form-group>
 
-        <label class="block font-semibold mb-2">
-            販売価格
-        </label>
+            <x-button
+                type="submit"
+                class="bg-blue-500 hover:bg-blue-700"
+            >
+                登録
+            </x-button>
 
-        <x-input
-            type="number"
-            name="sale_price"
-            value="{{ old('sale_price') }}"
-        />
-
-    </div>
-
-    <x-button
-        type="submit"
-        class="bg-blue-500 hover:bg-blue-700"
-    >
-        登録
-    </x-button>
-
-</form>
+        </form>
+    </x-card>
+</div>
 
 @endsection

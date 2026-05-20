@@ -12,17 +12,39 @@
 <body class="bg-gray-100 text-gray-800">
 
 
-    <header class="bg-sky-400 text-white p-4">
-        <h1 class="text-3xl font-bold">
-            <a href="/products">簡易POSシステム</a>
-        </h1>
-        <nav>
-            <a href="/products">商品一覧</a>
-            <a href="/products/create">商品登録</a>
-        </nav>
+<header class="bg-sky-700 shadow">
 
-        <hr>
-    </header>
+    <div class="max-w-6xl mx-auto px-6 py-4">
+
+        <div class="flex justify-between items-center">
+
+            <h1 class="text-2xl font-bold text-white">
+                POSシステム
+            </h1>
+
+            <nav class="flex gap-4">
+
+                <a
+                    href="/products"
+                    class="text-white bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-lg"
+                >
+                    商品一覧
+                </a>
+
+                <a
+                    href="/products/create"
+                    class="text-white bg-white/30 hover:bg-white/40 px-4 py-2 rounded-lg"
+                >
+                    商品登録
+                </a>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</header>
 
     <main class="max-w-3xl mx-auto p-6">
 
