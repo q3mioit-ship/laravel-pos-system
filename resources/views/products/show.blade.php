@@ -2,35 +2,94 @@
 
 @section('content')
 
-<h2>商品詳細</h2>
+<div class="max-w-2xl mx-auto">
 
-<p>商品名：{{ $product->name }}</p>
+    <div class="bg-white shadow rounded-2xl p-8">
 
-<p>在庫数：{{ $product->stock }}</p>
+        <div class="flex justify-between items-start mb-6">
 
-<p>仕入価格：{{ $product->cost_price }}</p>
+            <div>
+                <p class="text-sm text-gray-500 mb-2">
+                    商品詳細
+                </p>
 
-<p>販売価格：{{ $product->sale_price }}</p>
+                <h1 class="text-3xl font-bold text-gray-800">
+                    {{ $product->name }}
+                </h1>
+            </div>
 
-<p>
-    <a href="/products">
-        商品一覧へ戻る
-    </a>
-</p>
-<p>
-    <a href="/products/{{ $product->id }}/edit">
-        編集
-    </a>
-</p>
-<form action="/products/{{ $product->id }}" method="POST">
+            <a
+                href="/products"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
+            >
+                戻る
+            </a>
 
-    @csrf
-    @method('DELETE')
+        </div>
 
-    <button type="submit">
-        削除
-    </button>
+        <div class="space-y-4 text-lg">
 
-</form>
+            <div class="border-b pb-4">
+                <p class="text-gray-500 text-sm">
+                    在庫数
+                </p>
+
+                <p class="font-semibold text-2xl">
+                    {{ $product->stock }}
+                </p>
+            </div>
+
+            <div class="border-b pb-4">
+                <p class="text-gray-500 text-sm">
+                    仕入価格
+                </p>
+
+                <p class="font-semibold text-2xl">
+                    ¥{{ number_format($product->cost_price) }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">
+                    販売価格
+                </p>
+
+                <p class="font-semibold text-2xl text-green-700">
+                    ¥{{ number_format($product->sale_price) }}
+                </p>
+            </div>
+
+        </div>
+
+        <div class="flex gap-4 mt-8">
+
+            <x-link-button
+                href="/products/{{ $product->id }}/edit"
+                class="bg-sky-500 hover:bg-sky-700"
+            >
+                編集
+            </x-link-button>
+
+            <form
+                action="/products/{{ $product->id }}"
+                method="POST"
+            >
+                @csrf
+                @method('DELETE')
+
+            <x-button
+                type="submit"
+                class="bg-red-600 hover:bg-red-700"
+            >
+                削除
+            </x-button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 @endsection

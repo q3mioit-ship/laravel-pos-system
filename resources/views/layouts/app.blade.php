@@ -12,7 +12,7 @@
 <body class="bg-gray-100 text-gray-800">
 
 
-    <header class="bg-green-700 text-white p-4">
+    <header class="bg-sky-400 text-white p-4">
         <h1 class="text-3xl font-bold">
             <a href="/products">簡易POSシステム</a>
         </h1>

@@ -10,7 +10,7 @@
 
     <a
         href="/products/create"
-        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
     >
         商品登録
     </a>
@@ -45,7 +45,7 @@
 
                     <a
                         href="/products/{{ $product->id }}"
-                        class="text-green-700 font-bold hover:underline"
+                        class="text-sky-700 font-bold hover:underline"
                     >
                         詳細 →
                     </a>
