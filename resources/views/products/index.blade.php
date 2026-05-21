@@ -4,9 +4,19 @@
 
 <div class="flex justify-between items-center mb-6">
 
-    <h2 class="text-2xl font-bold">
-        商品一覧
-    </h2>
+    <h1 class="text-3xl font-bold mb-8">
+
+        @isset($category)
+
+            {{ $category->name }} 一覧
+
+        @else
+
+            商品一覧
+
+        @endisset
+
+    </h1>
 
     <a
         href="/products/create"

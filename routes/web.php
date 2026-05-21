@@ -7,6 +7,11 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+
+Route::get('/categories', [CategoryController::class, 'index']);
+
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
 
 Route::get('/products', [ProductController::class, 'index']);
 

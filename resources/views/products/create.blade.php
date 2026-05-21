@@ -10,7 +10,7 @@
             商品登録
         </h1>
 
-    @if ($errors->any())
+        @if ($errors->any())
 
         <div class="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-6">
 
@@ -26,11 +26,38 @@
 
         </div>
 
-    @endif
+        @endif
 
         <form action="/products" method="POST" class="space-y-6">
 
-            @csrf
+        @csrf
+            <x-form-group
+            label="部門"
+            field="category_id"
+            >
+
+            <select
+                name="category_id"
+                class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:outline-none"
+            >
+
+                <option value="">
+                    部門を選択してください
+                </option>
+
+                @foreach($categories as $category)
+
+                    <option
+                        value="{{ $category->id }}"
+                        @selected(old('category_id') == $category->id)
+                    >
+                        {{ $category->name }}
+                    </option>
+
+                @endforeach
+
+            </select>
+            </x-form-group>
 
             <x-form-group
                 label="商品名"
