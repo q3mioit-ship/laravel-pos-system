@@ -17,7 +17,24 @@
         @endisset
 
     </h1>
+    <form action="{{ route('products.index') }}" method="GET" class="mb-6 flex gap-2">
 
+        <input
+            type="text"
+            name="keyword"
+            value="{{ request('keyword') }}"
+            placeholder="商品名を検索"
+            class="border rounded-lg px-4 py-2 w-full"
+        >
+
+        <button
+            type="submit"
+            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+        >
+            検索
+        </button>
+
+    </form>
     <a
         href="/products/create"
         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -45,6 +62,8 @@
                         在庫数：{{ $product->stock }}
                     </p>
 
+                    <x-stock-badge :stock="$product->stock" />
+                    
                     <p class="text-gray-600">
                         販売価格：¥{{ $product->sale_price }}
                     </p>
@@ -67,6 +86,8 @@
         </div>
 
     @endforeach
+
+    {{ $products->links() }}
 
 </div>
 

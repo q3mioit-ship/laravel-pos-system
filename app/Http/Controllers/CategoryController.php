@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $products = $category->products;
+        $products = $category->products()->paginate(10);
 
         return view(
             'products.index',
