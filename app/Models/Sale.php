@@ -11,10 +11,15 @@ class Sale extends Model
         'quantity',
         'unit_price',
         'sold_at',
+        'customer_id',
     ];
 
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

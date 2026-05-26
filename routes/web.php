@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\CustomerController;
 
 Route::get('/categories', [CategoryController::class, 'index'])
     ->name('categories.index');
@@ -53,3 +54,5 @@ Route::get('/purchases/create', [PurchaseController::class, 'create'])
 
 Route::post('/purchases', [PurchaseController::class, 'store'])
     ->name('purchases.store');
+
+Route::resource('customers', CustomerController::class);

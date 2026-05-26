@@ -31,6 +31,8 @@
                     <th class="text-left p-4">数量</th>
                     <th class="text-left p-4">金額</th>
                     <th class="text-left p-4">売上日時</th>
+                    <th class="text-left p-4">顧客</th>
+
                 </tr>
             </thead>
 
@@ -51,6 +53,10 @@
                         </td>
                         <td class="p-4">
                             {{ $sale->sold_at }}
+                        </td>
+                        <td class="text-gray-600 mt-2">
+                            顧客：
+                            {{ $sale->customer?->name ?? '未登録' }}
                         </td>
 
                     </tr>

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Sale;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
@@ -38,6 +41,23 @@ class DashboardController extends Controller
         ->take(5)
         ->get();
 
+    $todaySalesAmount = Sale::whereDate('sold_at', Carbon::today())
+        ->sum(DB::raw('quantity * unit_price'));
+
+    $monthlySalesAmount = Sale::whereMonth('sold_at', Carbon::now()->month)
+        ->whereYear('sold_at', Carbon::now()->year)
+        ->sum(DB::raw('quantity * unit_price'));
+
+    $yearlySalesAmount = Sale::whereYear('sold_at', Carbon::now()->year)
+        ->sum(DB::raw('quantity * unit_price'));
+    
+    $monthlySales = Sale::selectRaw('strftime("%m", sold_at) as month')
+    ->selectRaw('SUM(quantity * unit_price) as total')
+    ->whereYear('sold_at', Carbon::now()->year)
+    ->groupBy('month')
+    ->orderBy('month')
+    ->get();
+
     return view('dashboard', compact(
         'productCount',
         'categoryCount',
@@ -46,6 +66,11 @@ class DashboardController extends Controller
         'lowStockProducts',
         'todaySales',
         'popularProducts',
+        'todaySalesAmount',
+        'monthlySalesAmount',
+        'yearlySalesAmount',
+        'monthlySales',
+
     ));
 }
 }

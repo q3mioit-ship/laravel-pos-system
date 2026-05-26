@@ -41,6 +41,29 @@
                 class="w-full border rounded px-4 py-3"
             >
         </div>
+        <div class="mb-4">
+            <label class="block mb-2 font-medium">
+                顧客（任意）
+            </label>
+
+            <select
+                name="customer_id"
+                class="w-full border rounded-xl p-3"
+            >
+                <option value="">
+                    選択してください
+                </option>
+
+                @foreach($customers as $customer)
+                    <option
+                        value="{{ $customer->id }}"
+                        @selected(old('customer_id') == $customer->id)
+                    >
+                        {{ $customer->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
         @error('quantity')
             <p class="text-red-500 text-sm">

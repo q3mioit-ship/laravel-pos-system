@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use App\Models\Customer;
 
 class SalesController extends Controller
 {
@@ -12,14 +13,22 @@ class SalesController extends Controller
     {
         $products = Product::orderBy('name')->get();
 
-        return view('sales.create', compact('products'));
+        $customers = Customer::orderBy('name')->get();
+
+        return view('sales.create', compact(
+        'products',
+        'customers'
+    ));
     }
 
     public function store(Request $request)
+    
     {
         $validated = $request->validate([
             'product_id' => ['required', 'exists:products,id'],
             'quantity' => ['required', 'integer', 'min:1'],
+            'customer_id' => ['nullable', 'exists:customers,id'],
+
         ]);
 
         $product = Product::findOrFail($validated['product_id']);
@@ -37,6 +46,7 @@ class SalesController extends Controller
             'quantity' => $validated['quantity'],
             'unit_price' => $product->sale_price,
             'sold_at' => now(),
+            'customer_id' => $validated['customer_id'] ?? null,
         ]);
 
         $product->decrement('stock', $validated['quantity']);
@@ -48,9 +58,12 @@ class SalesController extends Controller
 
     public function index()
     {
-        $sales = Sale::with('product')
-            ->latest('sold_at')
-            ->paginate(10);
+        $sales = Sale::with([
+            'product',
+            'customer'
+        ])
+        ->latest()
+        ->paginate(10);
 
         return view('sales.index', compact('sales'));
     }

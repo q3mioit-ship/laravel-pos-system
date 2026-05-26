@@ -22,7 +22,7 @@
                 簡易POSシステム
             </h1>
 
-            <nav class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+            <nav class="flex flex-col md:flex-row gap-3 w-full md:w-auto whitespace-nowrap">
                 <a
                     href="{{ route('dashboard') }}"
                     class="
@@ -31,6 +31,8 @@
                         px-5 py-3
                         rounded-lg
                         transition
+                        flex-1
+                        min-w-120px
 
                         {{ request()->routeIs('dashboard')
                             ? 'bg-blue-800'
@@ -49,6 +51,8 @@
                         px-5 py-3
                         rounded-lg
                         transition
+                        flex-1
+                        min-w-120px
 
                         {{ request()->routeIs('products.index')
                             ? 'bg-blue-800'
@@ -68,6 +72,8 @@
                         px-5 py-3
                         rounded-lg
                         transition
+                        flex-1
+                        min-w-120px
 
                         {{ request()->routeIs('categories.index')
                             ? 'bg-blue-800'
@@ -87,6 +93,8 @@
                         px-5 py-3
                         rounded-lg
                         transition
+                        flex-1
+                        min-w-120px
 
                         {{ request()->routeIs('products.create')
                             ? 'bg-blue-800'
@@ -104,6 +112,8 @@
                         px-5 py-3
                         rounded-lg
                         transition
+                        flex-1
+                        min-w-120px
 
                         {{ request()->routeIs('products.create')
                             ? 'bg-blue-800'
@@ -112,6 +122,25 @@
                     "
                 >
                     売上
+                </a>
+                <a
+                    href="{{ route('customers.index') }}"
+                    class="
+                        text-lg
+                        text-center
+                        px-5 py-3
+                        rounded-lg
+                        transition
+                        flex-1
+                        min-w-120px
+
+                        {{ request()->routeIs('products.create')
+                            ? 'bg-blue-800'
+                            : 'bg-sky-500 hover:bg-sky-400'
+                        }}
+                    "
+                >
+                    顧客情報
                 </a>
             </nav>
 
@@ -127,6 +156,6 @@
         </div>
 
     </main>
-
+@stack('scripts')
 </body>
 </html>
