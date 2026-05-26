@@ -24,12 +24,12 @@
             name="keyword"
             value="{{ request('keyword') }}"
             placeholder="商品名を検索"
-            class="border rounded-lg px-4 py-2 w-full"
+            class="border rounded-lg px-4 py-2 w-full basis-3/4"
         >
 
         <button
             type="submit"
-            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 basis-1/4"
         >
             検索
         </button>

@@ -96,7 +96,23 @@
                 >
                     商品登録
                 </a>
+                <a
+                    href="{{ route('sales.index') }}"
+                    class="
+                        text-lg
+                        text-center
+                        px-5 py-3
+                        rounded-lg
+                        transition
 
+                        {{ request()->routeIs('products.create')
+                            ? 'bg-blue-800'
+                            : 'bg-sky-500 hover:bg-sky-400'
+                        }}
+                    "
+                >
+                    売上
+                </a>
             </nav>
 
         </div>

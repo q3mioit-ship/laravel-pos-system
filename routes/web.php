@@ -9,6 +9,8 @@ Route::get('/', function () {
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\PurchaseController;
 
 Route::get('/categories', [CategoryController::class, 'index'])
     ->name('categories.index');
@@ -33,3 +35,21 @@ Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
+
+Route::get('/sales/create', [SalesController::class, 'create'])
+    ->name('sales.create');
+
+Route::post('/sales', [SalesController::class, 'store'])
+    ->name('sales.store');
+
+Route::get('/sales', [SalesController::class, 'index'])
+    ->name('sales.index');
+
+Route::get('/purchases', [PurchaseController::class, 'index'])
+    ->name('purchases.index');
+
+Route::get('/purchases/create', [PurchaseController::class, 'create'])
+    ->name('purchases.create');
+
+Route::post('/purchases', [PurchaseController::class, 'store'])
+    ->name('purchases.store');

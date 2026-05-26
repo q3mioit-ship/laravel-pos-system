@@ -5,81 +5,136 @@
 <div class="max-w-7xl mx-auto p-6">
 
     <h1 class="text-3xl font-bold mb-6">
-        ダッシュボード
+        管理画面
     </h1>
 
     {{-- 上段カード --}}
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
 
-        <x-card>
-            <p class="text-gray-500">商品数</p>
-            <p class="text-3xl font-bold text-blue-600">
+        <x-card class="p-6">
+            <p class="text-sm text-gray-500 mb-2">商品数</p>
+            <p class="text-4xl font-bold text-blue-600">
                 {{ $productCount }}
             </p>
         </x-card>
 
-        <x-card>
-            <p class="text-gray-500">カテゴリ数</p>
-            <p class="text-3xl font-bold text-sky-600">
+        <x-card class="p-6">
+            <p class="text-sm text-gray-500 mb-2">カテゴリ数</p>
+            <p class="text-4xl font-bold text-green-600">
                 {{ $categoryCount }}
             </p>
         </x-card>
 
-        <x-card>
-            <p class="text-gray-500">在庫不足</p>
-            <p class="text-3xl font-bold text-yellow-500">
+        <x-card class="p-6">
+            <p class="text-sm text-gray-500 mb-2">在庫不足</p>
+            <p class="text-4xl font-bold text-yellow-500">
                 {{ $lowStockCount }}
             </p>
         </x-card>
 
-        <x-card>
-            <p class="text-gray-500">売切</p>
-            <p class="text-3xl font-bold text-red-500">
+        <x-card class="p-6">
+            <p class="text-sm text-gray-500 mb-2">売切</p>
+            <p class="text-4xl font-bold text-red-500">
                 {{ $outOfStockCount }}
             </p>
         </x-card>
 
     </div>
-
+       
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
     {{-- 在庫不足商品 --}}
-    <x-card>
+        <x-card class="p-6">
 
-        <h2 class="text-2xl font-bold mb-4">
-            在庫不足商品
-        </h2>
+            <h2 class="text-xl font-bold mb-4">
+                在庫不足商品
+            </h2>
 
-        <div class="space-y-3">
+            <div class="space-y-3">
 
-            @forelse ($lowStockProducts as $product)
+                @foreach($lowStockProducts as $product)
+                    <div class="flex justify-between border-b pb-3">
+                        <span>{{ $product->name }}</span>
+                        <x-stock-badge :stock="$product->stock" />
+                    </div>
+                @endforeach
 
-                <div class="flex items-center justify-between border-b pb-2">
+            </div>
 
-                    <div>
-                        <p class="font-bold">
-                            {{ $product->name }}
-                        </p>
+        </x-card>
+    {{-- 人気商品ランキング --}}
+        <x-card class="p-6">
 
-                        <p class="text-gray-500">
-                            在庫: {{ $product->stock }}
-                        </p>
+            <h2 class="text-xl font-bold mb-4">
+                人気商品ランキング
+            </h2>
+
+            <div class="space-y-3">
+
+                @foreach($popularProducts as $index => $popularProduct)
+
+                    <div class="flex justify-between border-b pb-3">
+
+                        <span>
+                            {{ $index + 1 }}位
+                            {{ $popularProduct->product?->name ?? '商品不明' }}
+                        </span>
+
+                        <span class="font-semibold">
+                            {{ $popularProduct->total_quantity }}個
+                        </span>
+
                     </div>
 
-                    <x-stock-badge :stock="$product->stock" />
+                @endforeach
+
+            </div>
+
+        </x-card>
+    </div>
+
+</div>
+
+<x-card class="p-6 mt-6">
+
+    <h2 class="text-xl font-bold mb-4">
+        今日売れた商品
+    </h2>
+
+    <div class="space-y-3">
+
+        @forelse($todaySales as $sale)
+
+            <div class="flex justify-between items-center border-b pb-3">
+
+                <div>
+                    {{ $sale->product->name }}
+                </div>
+
+                <div class="text-right">
+
+                    <div>
+                        {{ $sale->quantity }}個
+                    </div>
+
+                    <div class="text-sm text-gray-500">
+                        ¥{{ number_format($sale->quantity * $sale->unit_price) }}
+                    </div>
 
                 </div>
 
-            @empty
+            </div>
 
-                <p class="text-gray-500">
-                    在庫不足商品はありません
-                </p>
+        @empty
 
-            @endforelse
+            <p class="text-gray-500">
+                今日の売上はまだありません
+            </p>
 
-        </div>
+        @endforelse
 
-    </x-card>
+    </div>
 
-</div>
+</x-card>
+    
 
 @endsection
