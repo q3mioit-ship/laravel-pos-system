@@ -7,6 +7,8 @@
             text-white
             font-semibold
             transition
+            bg-blue-600
+            hover:bg-blue-700
         '
     ]) }}
 >

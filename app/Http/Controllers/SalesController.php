@@ -11,9 +11,9 @@ class SalesController extends Controller
 {
      public function create()
     {
-        $products = Product::orderBy('name')->get();
+        $products = Product::orderBy('id')->get();
 
-        $customers = Customer::orderBy('name')->get();
+        $customers = Customer::orderBy('id')->get();
 
         return view('sales.create', compact(
         'products',

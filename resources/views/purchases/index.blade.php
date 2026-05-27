@@ -22,7 +22,46 @@
         </div>
     @endif
 
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    {{-- スマホ表示 --}}
+    <div class="space-y-4 md:hidden">
+
+        @forelse($purchases as $purchase)
+
+            <x-card class="border">
+
+                <div class="space-y-1">
+
+                    <h2 class="text-lg font-semibold">
+                        {{ $purchase->product->name }}
+                    </h2>
+
+                    <p class="text-sm text-gray-500">
+                        {{ $purchase->purchased_at }}
+                    </p>
+
+                </div>
+
+                <div class="mt-3 text-gray-700">
+                    数量：{{ $purchase->quantity }}個
+                </div>
+
+            </x-card>
+
+        @empty
+
+            <x-card>
+                <p class="text-center text-gray-500">
+                    仕入データがありません
+                </p>
+            </x-card>
+
+        @endforelse
+
+    </div>
+
+
+    {{-- PC表示 --}}
+    <div class="hidden md:block bg-white rounded-lg shadow overflow-hidden">
 
         <table class="w-full">
 
@@ -35,6 +74,7 @@
             </thead>
 
             <tbody>
+
                 @forelse($purchases as $purchase)
 
                     <tr class="border-t">
@@ -47,7 +87,7 @@
                             {{ $purchase->quantity }}
                         </td>
 
-                        <td class="p-4">
+                        <td class="p-4 whitespace-nowrap">
                             {{ $purchase->purchased_at }}
                         </td>
 
@@ -62,12 +102,12 @@
                     </tr>
 
                 @endforelse
+
             </tbody>
 
         </table>
 
     </div>
-
     <div class="mt-6">
         {{ $purchases->links() }}
     </div>

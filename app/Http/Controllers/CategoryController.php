@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('id')->get();
 
         return view(
             'categories.index',
@@ -26,5 +26,27 @@ class CategoryController extends Controller
             'products.index',
             compact('products', 'category')
         );
+    }
+    public function edit($id)
+    {
+        $category = Category::findOrFail($id);
+
+        return view('categories.edit', compact('category'));
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+        ]);
+
+        $category = Category::findOrFail($id);
+
+        $category->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'カテゴリを更新しました');
     }
 }

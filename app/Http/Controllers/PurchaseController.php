@@ -19,7 +19,7 @@ class PurchaseController extends Controller
 
     public function create()
     {
-        $products = Product::orderBy('name')->get();
+        $products = Product::orderBy('id')->get();
 
         return view('purchases.create', compact('products'));
     }

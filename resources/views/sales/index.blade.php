@@ -22,7 +22,57 @@
         </div>
     @endif
 
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    {{-- スマホ表示 --}}
+    <div class="space-y-4 md:hidden">
+
+        @forelse($sales as $sale)
+
+            <x-card class="border">
+
+                <div class="space-y-1">
+
+                    <h2 class="text-lg font-semibold leading-tight">
+                        {{ $sale->product->name }}
+                    </h2>
+
+                    <p class="text-sm text-gray-500">
+                        {{ $sale->sold_at }}
+                    </p>
+
+                </div>
+
+                <div class="text-gray-600">
+                        数量：{{ $sale->quantity }}個
+                </div>
+
+                <div class="font-semibold">
+                        金額：¥{{ number_format($sale->quantity * $sale->unit_price) }}
+                </div>
+
+                <div class="text-gray-600">
+                        顧客：{{ $sale->customer?->name ?? '未登録' }}
+                </div>
+
+            
+
+            </x-card>
+
+        @empty
+
+            <x-card>
+                <p class="text-center text-gray-500">
+                    売上データがありません
+                </p>
+            </x-card>
+
+        @endforelse
+
+    </div>
+
+
+    {{-- PC表示 --}}
+    <div class="hidden md:block bg-white rounded-lg shadow overflow-hidden">
+
         <table class="w-full">
 
             <thead class="bg-gray-100">
@@ -32,12 +82,13 @@
                     <th class="text-left p-4">金額</th>
                     <th class="text-left p-4">売上日時</th>
                     <th class="text-left p-4">顧客</th>
-
                 </tr>
             </thead>
 
             <tbody>
+
                 @forelse($sales as $sale)
+
                     <tr class="border-t">
 
                         <td class="p-4">
@@ -51,27 +102,32 @@
                         <td class="p-4">
                             ¥{{ number_format($sale->quantity * $sale->unit_price) }}
                         </td>
-                        <td class="p-4">
+
+                        <td class="p-4 whitespace-nowrap">
                             {{ $sale->sold_at }}
                         </td>
-                        <td class="text-gray-600 mt-2">
-                            顧客：
+
+                        <td class="p-4 text-gray-600">
                             {{ $sale->customer?->name ?? '未登録' }}
                         </td>
 
                     </tr>
+
                 @empty
+
                     <tr>
-                        <td colspan="3" class="p-6 text-center text-gray-500">
+                        <td colspan="5" class="p-6 text-center text-gray-500">
                             売上データがありません
                         </td>
                     </tr>
+
                 @endforelse
+
             </tbody>
 
         </table>
-    </div>
 
+    </div>
     <div class="mt-6">
         {{ $sales->links() }}
     </div>

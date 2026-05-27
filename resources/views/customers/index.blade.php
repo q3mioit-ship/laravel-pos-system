@@ -27,17 +27,26 @@
                     {{ $customer->name }}
                 </h2>
 
-                <p class="text-gray-600 mt-2">
-                    {{ $customer->phone }}
+                <p class="text-sm text-gray-500 mt-2">
+                    電話番号
                 </p>
 
-                <p class="mt-2">
-                    {{ $customer->memo }}
+                <p>
+                    {{ $customer->phone ?? '未登録' }}
                 </p>
 
-                <p class="text-blue-600 font-bold mt-2">
+                <p class="text-sm text-gray-500 mt-2">
+                    メモ
+                </p>
+
+                <p>
+                    {{ $customer->memo ?? 'なし' }}
+                </p>
+
+                <p class="text-blue-600 font-bold mt-4">
                     合計：¥{{ number_format($customer->total) }}
                 </p>
+
             </x-card>
             </a>
         @endforeach

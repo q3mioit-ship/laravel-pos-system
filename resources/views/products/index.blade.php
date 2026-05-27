@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="flex justify-between items-center mb-6">
+<div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
 
-    <h1 class="text-3xl font-bold mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold">
 
         @isset($category)
 
@@ -17,14 +17,18 @@
         @endisset
 
     </h1>
-    <form action="{{ route('products.index') }}" method="GET" class="mb-6 flex gap-2">
+    <form
+    action="{{ route('products.index') }}"
+    method="GET"
+    class="flex w-full md:w-auto gap-2"
+    >
 
         <input
             type="text"
             name="keyword"
             value="{{ request('keyword') }}"
             placeholder="商品名を検索"
-            class="border rounded-lg px-4 py-2 w-full basis-3/4"
+            class="border rounded-lg px-4 py-2 w-full flex-1"
         >
 
         <button
@@ -37,7 +41,7 @@
     </form>
     <a
         href="/products/create"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 text-center"
     >
         商品登録
     </a>
@@ -48,47 +52,48 @@
 
     @foreach ($products as $product)
 
-        <div class="border rounded-lg p-4 shadow bg-white">
+        <a
+            href="{{ route('products.show', $product) }}"
+            class="block"
+        >
 
-            <div class="flex justify-between items-center">
+            <x-card
+                class="border hover:shadow-lg hover:bg-sky-50 transition"
+            >
 
-                <div>
+                <div class="flex justify-between items-center">
 
-                    <h3 class="text-xl font-semibold">
-                        {{ $product->name }}
-                    </h3>
+                    <div>
 
-                    <p class="text-gray-600 mt-2">
-                        在庫数：{{ $product->stock }}
-                    </p>
+                        <h3 class="text-xl font-semibold">
+                            {{ $product->name }}
+                        </h3>
 
-                    <x-stock-badge :stock="$product->stock" />
-                    
-                    <p class="text-gray-600">
-                        販売価格：¥{{ $product->sale_price }}
-                    </p>
+                        <p class="text-gray-600 mt-2">
+                            在庫数：{{ $product->stock }}
+                        </p>
 
-                </div>
+                        <x-stock-badge :stock="$product->stock" />
 
-                <div>
+                        <p class="text-gray-600 mt-2">
+                            販売価格：¥{{ number_format($product->sale_price) }}
+                        </p>
 
-                    <a
-                        href="/products/{{ $product->id }}"
-                        class="text-sky-700 font-bold hover:underline"
+                    </div>
+
+                    <div
+                        class="text-sky-600 font-bold"
                     >
                         詳細 →
-                    </a>
+                    </div>
 
                 </div>
 
-            </div>
+            </x-card>
 
-        </div>
+        </a>
 
     @endforeach
 
-    {{ $products->links() }}
-
 </div>
-
 @endsection

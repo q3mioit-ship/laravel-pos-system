@@ -33,7 +33,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('name')->get();
 
         return view('products.create', compact('categories'));
     }
@@ -78,8 +78,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+        $categories = Category::orderBy('name')->get();
 
-        return view('products.edit', compact('product'));
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -88,6 +89,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'category_id' => 'required|exists:categories,id',
             'name' => 'required',
             'stock' => 'required|integer',
             'cost_price' => 'required|integer',
@@ -97,6 +99,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $product->update([
+            'category_id' => $request->category_id,
             'name' => $request->name,
             'stock' => $request->stock,
             'cost_price' => $request->cost_price,
@@ -104,9 +107,26 @@ class ProductController extends Controller
         ]);
 
         return redirect('/products/' . $product->id);
-
     }
+    public function increaseStock(Product $product)
+    {
+        $product->stock = $product->stock + 1;
+        $product->save();
 
+        return redirect()->route('products.show', $product->id);
+    }
+    public function decreaseStock(Request $request, Product $product)
+    {
+        $qty = $request->input('quantity', 1);
+
+        if ($product->stock < $qty) {
+            return back()->with('error', '在庫が不足しています');
+        }
+
+        $product->decrement('stock', $qty);
+
+        return redirect()->route('products.show', $product->id);
+    }
     /**
      * Remove the specified resource from storage.
      */ 

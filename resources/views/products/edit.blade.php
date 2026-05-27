@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="max-w-2xl mx-auto">
+<div class="max-w-2xl mx-auto px-4 py-6">
 
     <x-card>
 
@@ -37,7 +37,39 @@
 
             @csrf
             @method('PUT')
+            <x-form-group
+                label="部門"
+                field="category_id"
+            >
 
+                <select
+                    name="category_id"
+                    class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                >
+
+                    <option value="">
+                        部門を選択してください
+                    </option>
+
+                    @foreach($categories as $category)
+
+                        <option
+                            value="{{ $category->id }}"
+                            @selected(
+                                old(
+                                    'category_id',
+                                    $product->category_id
+                                ) == $category->id
+                            )
+                        >
+                            {{ $category->name }}
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </x-form-group>
             <x-form-group
                 label="商品名"
                 field="name"
@@ -91,7 +123,7 @@
 
             <x-button
                 type="submit"
-                class="bg-sky-500 hover:bg-sky-700"
+                class="w-full bg-sky-500 hover:bg-sky-700"
             >
                 更新
             </x-button>

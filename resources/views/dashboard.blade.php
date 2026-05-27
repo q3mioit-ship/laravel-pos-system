@@ -45,33 +45,36 @@
 
         <x-card class="bg-purple-50 border border-purple-100">
             <p class="text-sm text-gray-500">今日の売上</p>
-            <p class="mt-2 text-3xl font-bold">
+            <p class="mt-2 text-4xl md:text-5xl font-bold">
                 ¥{{ number_format($todaySalesAmount) }}
             </p>
         </x-card>
 
         <x-card class="bg-purple-50 border border-purple-100">
             <p class="text-sm text-gray-500">今月の売上</p>
-            <p class="mt-2 text-3xl font-bold">
+            <p class="mt-2 text-4xl md:text-5xl font-bold">
                 ¥{{ number_format($monthlySalesAmount) }}
             </p>
         </x-card>
 
         <x-card class="bg-purple-50 border border-purple-100">
             <p class="text-sm text-gray-500">今年の売上</p>
-            <p class="mt-2 text-3xl font-bold">
+            <p class="mt-2 text-4xl md:text-5xl font-bold">
                 ¥{{ number_format($yearlySalesAmount) }}
             </p>
         </x-card>
 
     </div>
 
-    <x-card class="bg-slate-50 border border-slate-100 mt-8">
+    
+        <x-card class="bg-slate-50 border border-slate-100 mt-8">
+    
         <h2 class="text-lg font-bold mb-4">
             月別売上推移
         </h2>
-
-        <canvas id="monthlySalesChart"></canvas>
+        <div class="relative h-64 md:h-80">
+           <canvas id="monthlySalesChart"></canvas>
+        </div>
     </x-card>
 
         @push('scripts')
@@ -98,11 +101,7 @@
                 },
                 options: {
                     responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
+                    maintainAspectRatio: false
                 }
             });
         });
@@ -119,14 +118,18 @@
             </h2>
 
             <div class="space-y-3">
-
+                @if($lowStockProducts->isEmpty())
+                    <p class="text-gray-500">
+                        在庫不足の商品はありません
+                    </p>
+                @else
                 @foreach($lowStockProducts as $product)
                     <div class="flex justify-between border-b pb-3">
                         <span>{{ $product->name }}</span>
                         <x-stock-badge :stock="$product->stock" />
                     </div>
                 @endforeach
-
+                @endif
             </div>
 
         </x-card>
@@ -205,7 +208,4 @@
 
 </div>
 
-
-
-    
 @endsection

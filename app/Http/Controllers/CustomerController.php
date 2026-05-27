@@ -55,10 +55,31 @@ class CustomerController extends Controller
             return $sale->quantity * $sale->unit_price;
         });
 
+        $purchaseCount = $sales->count();
+
         return view('customers.show', compact(
             'customer',
             'sales',
-            'total'
+            'total',
+            'purchaseCount',
         ));
+    }
+    public function edit(Customer $customer)
+    {
+        return view('customers.edit', compact('customer'));
+    }
+    public function update(Request $request, Customer $customer)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'phone' => ['nullable', 'max:255'],
+            'memo' => ['nullable'],
+        ]);
+
+        $customer->update($validated);
+
+        return redirect()
+            ->route('customers.show', $customer)
+            ->with('success', '顧客情報を更新しました');
     }
 }

@@ -17,12 +17,14 @@
 
             <select
                 name="product_id"
-                class="w-full border rounded px-4 py-3"
+                class="w-full border rounded-lg px-4 py-3"
             >
                 @foreach($products as $product)
-                    <option value="{{ $product->id }}">
-                        {{ $product->name }}
-                        （在庫 {{ $product->stock }}）
+                    <option
+                        value="{{ $product->id }}"
+                        @selected(old('product_id') == $product->id)
+                    >
+                        {{ $product->name }}（在庫 {{ $product->stock }}）
                     </option>
                 @endforeach
             </select>
@@ -38,17 +40,18 @@
                 name="quantity"
                 value="{{ old('quantity', 1) }}"
                 min="1"
-                class="w-full border rounded px-4 py-3"
+                class="w-full border rounded-lg px-4 py-3"
             >
         </div>
-        <div class="mb-4">
+
+        <div>
             <label class="block mb-2 font-medium">
                 顧客（任意）
             </label>
 
             <select
                 name="customer_id"
-                class="w-full border rounded-xl p-3"
+                class="w-full border rounded-lg px-4 py-3"
             >
                 <option value="">
                     選択してください
@@ -73,7 +76,7 @@
 
         <button
             type="submit"
-            class="bg-blue-600 text-white px-6 py-3 rounded"
+            class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
         >
             登録する
         </button>
