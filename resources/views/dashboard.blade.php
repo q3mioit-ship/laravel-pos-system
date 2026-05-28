@@ -65,15 +65,30 @@
         </x-card>
 
     </div>
+    {{-- 売り上げグラフ切替ボタン --}}
+    <x-card class="bg-slate-50 border border-slate-100 mt-8">
+        <div class="flex flex-col gap-3 md:flex-row md:justify-between md:items-center mb-4">
+            <h2 class="text-lg font-bold mb-4">売上推移</h2>
 
+            <div class="flex gap-2 flex-wrap">
+                <button
+                    onclick="switchChart('weekly')"
+                    class="px-3 py-1 bg-gray-200 rounded-lg text-sm"
+                >
+                    1週間
+                </button>
+
+                <button
+                    onclick="switchChart('monthly')"
+                    class="px-3 py-1 bg-gray-200 rounded-lg text-sm"
+                >
+                    月別
+                </button>
+            </div>
+        </div>    
     
-        <x-card class="bg-slate-50 border border-slate-100 mt-8">
-    
-        <h2 class="text-lg font-bold mb-4">
-            月別売上推移
-        </h2>
-        <div class="relative h-64 md:h-80">
-           <canvas id="monthlySalesChart"></canvas>
+        <div class="relative w-full h-72 md:h-80">
+           <canvas id="salesChart"></canvas>
         </div>
     </x-card>
 
@@ -81,30 +96,56 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const ctx = document.getElementById('monthlySalesChart');
+        const weeklySales = @json($weeklySales);
+        const monthlySales = @json($monthlySales);
+        const isMobile = window.innerWidth < 768;
 
-            if (!ctx) return;
+        const ctx = document.getElementById('salesChart');
 
-            new Chart(ctx, {
-                type: 'bar',
+        let chart;
+
+        function switchChart(type) {
+
+            let labels = [];
+            let data = [];
+
+            if (type === 'weekly') {
+                labels = weeklySales.map(item => {
+                    const date = new Date(item.label);
+                    return `${date.getMonth() + 1}/${date.getDate()}`;
+                });
+                data = weeklySales.map(item => item.total);
+            } else {
+                labels = monthlySales.map(item => item.month + '月');
+                data = monthlySales.map(item => item.total);
+            }
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'line',
                 data: {
-                    labels: @json(
-                        $monthlySales->map(fn($sale) => intval($sale->month) . '月')
-                    ),
+                    labels: labels,
                     datasets: [{
-                        label: '売上金額',
-                        data: @json(
-                            $monthlySales->pluck('total')
-                        ),
+                        label: '売上',
+                        data: data,
+                        tension: 0,
+                        pointRadius: isMobile ? 3 : 6,
+                        pointHoverRadius: isMobile ? 4 : 8,
+                        borderWidth: isMobile ? 2 : 3,
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false
+                    
                 }
             });
-        });
+        }
+
+        switchChart('weekly');
         </script>
         @endpush 
 

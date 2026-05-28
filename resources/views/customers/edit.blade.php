@@ -6,9 +6,20 @@
 
     <x-card>
 
-        <h1 class="text-2xl font-bold mb-6">
-            顧客編集
-        </h1>
+        <div class="flex justify-between items-center mb-6">
+
+            <h1 class="text-2xl font-bold">
+                顧客編集
+            </h1>
+
+            <a
+                href="{{ route('customers.show', $customer->id) }}"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
+            >
+                戻る
+            </a>
+
+        </div>
 
         <form
             action="{{ route('customers.update', $customer) }}"

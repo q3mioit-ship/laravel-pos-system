@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     @vite('resources/css/app.css')
 
     <title>POSシステム</title>
@@ -103,41 +103,41 @@
 
         <a
             href="{{ route('dashboard') }}"
-            class="py-3 {{ request()->routeIs('dashboard') ? 'text-blue-600 font-bold' : 'text-gray-500' }}"
+            class="py-3 {{ request()->routeIs('dashboard') ? 'text-blue-600 font-bold bg-slate-200 rounded-xl' : 'text-gray-500' }}"
         >
-            <div>🏠</div>
+            <div><i class="fa-solid fa-house text-xl"></i></div>
             <div>管理</div>
         </a>
 
         <a
             href="{{ route('categories.index') }}"
-            class="py-3 {{ request()->routeIs('categories.*')  || request()->routeIs('products.*')? 'text-blue-600 font-bold' : 'text-gray-500' }}"
+            class="py-3 {{ request()->routeIs('categories.*')  || request()->routeIs('products.*')? 'text-blue-600 font-bold  bg-slate-200 rounded-xl' : 'text-gray-500' }}"
         >
-            <div>📦</div>
+            <div><i class="fa-solid fa-box text-xl"></i></div>
             <div>商品</div>
         </a>
 
         <a
             href="{{ route('sales.index') }}"
-            class="py-3 {{ request()->routeIs('sales.*') ? 'text-blue-600 font-bold' : 'text-gray-500' }}"
+            class="py-3 {{ request()->routeIs('sales.*') ? 'text-blue-600 font-bold bg-slate-200 rounded-xl' : 'text-gray-500' }}"
         >
-            <div>💰</div>
+            <div><i class="fa-solid fa-cash-register text-xl"></i></div>
             <div>売上</div>
         </a>
 
         <a
             href="{{ route('purchases.index') }}"
-            class="py-3 {{ request()->routeIs('purchases.*') ? 'text-blue-600 font-bold' : 'text-gray-500' }}"
+            class="py-3 {{ request()->routeIs('purchases.*') ? 'text-blue-600 font-bold bg-slate-200 rounded-xl' : 'text-gray-500' }}"
         >
-            <div>🚚</div>
+            <div><i class="fa-solid fa-truck text-xl"></i></div>
             <div>仕入</div>
         </a>
 
         <a
             href="{{ route('customers.index') }}"
-            class="py-3 {{ request()->routeIs('customers.*') ? 'text-blue-600 font-bold' : 'text-gray-500' }}"
+            class="py-3 {{ request()->routeIs('customers.*') ? 'text-blue-600 font-bold bg-slate-200 rounded-xl' : 'text-gray-500' }}"
         >
-            <div>👤</div>
+            <div><i class="fa-solid fa-users text-xl"></i></div>
             <div>顧客</div>
         </a>
 

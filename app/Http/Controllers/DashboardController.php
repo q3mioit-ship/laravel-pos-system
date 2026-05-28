@@ -58,6 +58,13 @@ class DashboardController extends Controller
     ->orderBy('month')
     ->get();
 
+    $weeklySales = Sale::selectRaw('DATE(sold_at) as label')
+    ->selectRaw('SUM(quantity * unit_price) as total')
+    ->where('sold_at', '>=', now()->subDays(6))
+    ->groupBy('label')
+    ->orderBy('label')
+    ->get();
+
     return view('dashboard', compact(
         'productCount',
         'categoryCount',
@@ -70,6 +77,7 @@ class DashboardController extends Controller
         'monthlySalesAmount',
         'yearlySalesAmount',
         'monthlySales',
+        'weeklySales',
 
     ));
 }

@@ -4,10 +4,20 @@
 
 <div class="max-w-3xl mx-auto p-6">
 
-    <h1 class="text-2xl font-bold mb-6">
-        顧客登録
-    </h1>
+    <div class="flex justify-between items-center mb-6">
 
+        <h1 class="text-2xl font-bold">
+            顧客登録
+        </h1>
+
+        <a
+            href="{{ route('customers.index') }}"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg w-20 text-center"
+        >
+            戻る
+        </a>
+
+    </div>
     <form action="{{ route('customers.store') }}" method="POST">
 
         @csrf

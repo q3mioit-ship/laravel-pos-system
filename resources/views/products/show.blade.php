@@ -19,8 +19,8 @@
             </div>
 
             <a
-                href="/products"
-                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
+                href="{{ route('categories.show', $product->category_id) }}"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg w-20 text-center"
             >
                 戻る
             </a>
@@ -75,36 +75,6 @@
                 </button>
             </form>
         </div>
-    
-        <!-- <div id="stockModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-
-            <div class="bg-white p-6 rounded-lg w-80">
-
-                <h2 id="modalTitle" class="text-xl font-bold mb-4"></h2>
-
-                <form id="stockForm" method="POST">
-                    @csrf
-
-                    <input
-                        type="number"
-                        name="quantity"
-                        min="1"
-                        value="1"
-                        class="border w-full px-3 py-2 rounded mb-4"
-                    >
-
-                    <button class="w-full bg-blue-600 text-white py-2 rounded">
-                        実行
-                    </button>
-                </form>
-
-                <button onclick="closeStockModal()" class="mt-3 text-gray-500 w-full">
-                    閉じる
-                </button>
-
-            </div>
-
-        </div> -->
 
         <div class="flex gap-4 mt-8">
 
@@ -136,30 +106,5 @@
 
 
 </div>
-<!-- @push('scripts')
-<script>
-    const productId = {{ $product->id }};
 
-    function openStockModal(type) {
-
-        const modal = document.getElementById('stockModal');
-        const form = document.getElementById('stockForm');
-        const title = document.getElementById('modalTitle');
-
-        modal.classList.remove('hidden');
-
-        if (type === 'increase') {
-            title.innerText = '在庫を追加';
-            form.action = `/products/${productId}/stock/increase`;
-        } else {
-            title.innerText = '在庫を減らす';
-            form.action = `/products/${productId}/stock/decrease`;
-        }
-    }
-
-    function closeStockModal() {
-        document.getElementById('stockModal').classList.add('hidden');
-    }
-</script>
-@endpush -->
 @endsection

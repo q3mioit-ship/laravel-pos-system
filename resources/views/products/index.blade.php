@@ -1,9 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-
+@isset($category)
+    <div class="mb-4 flex justify-end">
+        <a
+            href="{{ route('categories.index') }}"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">
+            戻る
+        </a>
+    </div>
+@endisset
 <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
-
+    
     <h1 class="text-2xl md:text-3xl font-bold">
 
         @isset($category)
@@ -15,7 +23,7 @@
             商品一覧
 
         @endisset
-
+        
     </h1>
     <form
     action="{{ route('products.index') }}"
@@ -39,9 +47,9 @@
         </button>
 
     </form>
-    <a
-        href="/products/create"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 text-center"
+    <a 
+        href="{{ route('products.create', ['category_id' => $category->id]) }}"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center"
     >
         商品登録
     </a>

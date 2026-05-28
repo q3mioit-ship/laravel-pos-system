@@ -4,23 +4,26 @@
 
 <div class="max-w-5xl mx-auto px-4 py-6">
 
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-3xl font-bold flex-1">
+    <div class="flex justify-between items-start mb-6">
+
+    <div>
+        <p class="text-sm text-gray-500 mb-2">
             顧客詳細
+        </p>
+
+        <h1 class="text-3xl font-bold text-gray-800">
+            {{ $customer->name }}
         </h1>
-        <a
-            href="{{ route('customers.edit', $customer) }}"
-            class="
-            bg-sky-600
-            text-white
-            px-4 py-2
-            rounded-lg
-            hover:bg-sky-700
-            transition
-            text-sm md:text-base    ">
-            編集する
-        </a>
     </div>
+
+    <a
+        href="{{ route('customers.index') }}"
+        class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
+    >
+        戻る
+    </a>
+
+</div>
     <x-card class="mb-6">
         <div class="space-y-3">
 
@@ -166,6 +169,14 @@
         </div>
 
     </x-card>
+    <div class="mt-8">
+        <x-link-button
+            href="{{ route('customers.edit', $customer->id) }}"
+            class="bg-sky-500 hover:bg-sky-700"
+        >
+            編集
+        </x-link-button>
+    </div>
 </div>
 
 @endsection
