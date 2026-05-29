@@ -76,7 +76,8 @@ return [
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field must exist in :other.',
     'in_array_keys' => 'The :attribute field must contain at least one of the following keys: :values.',
-    'integer' => 'The :attribute field must be an integer.',
+    // 'integer' => 'The :attribute field must be an integer.',
+    'integer' => ':attribute は整数で入力してください。',
     'ip' => 'The :attribute field must be a valid IP address.',
     'ipv4' => 'The :attribute field must be a valid IPv4 address.',
     'ipv6' => 'The :attribute field must be a valid IPv6 address.',
@@ -140,7 +141,8 @@ return [
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
     'regex' => 'The :attribute field format is invalid.',
-    'required' => 'The :attribute field is required.',
+    // 'required' => 'The :attribute field is required.',
+    'required' => ':attribute は必須項目です。',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
@@ -183,6 +185,13 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    'attributes' => [
+    'name' => '商品名',
+    'stock' => '在庫数',
+    'cost_price' => '仕入価格',
+    'sale_price' => '販売価格',
+    'category_id' => 'カテゴリ',
+],
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +204,6 @@ return [
     |
     */
 
-    'attributes' => [],
+    // 'attributes' => [],
 
 ];
