@@ -10,12 +10,21 @@
             <h1 class="text-2xl font-bold mb-6">
                 商品登録
             </h1>
+        @if (request('category_id'))
             <a
                 href="{{ route('categories.show', request('category_id')) }}"
-                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg w-20 text-center"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
             >
                 戻る
             </a>
+        @else
+            <a
+                href="{{ route('products.index') }}"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
+            >
+                戻る
+            </a>
+        @endif
         </div>
         @if ($errors->any())
 

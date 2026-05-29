@@ -91,6 +91,13 @@
 <main class="max-w-7xl mx-auto p-4 md:p-6 pb-24 md:pb-6">
 
     <div class="bg-white rounded-lg shadow p-6">
+        @if (session('success'))
+        <div class="max-w-5xl mx-auto px-4 mt-4 mb-6">
+            <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-lg">
+                {{ session('success') }}
+            </div>
+        </div>
+        @endif
         @yield('content')
     </div>
 

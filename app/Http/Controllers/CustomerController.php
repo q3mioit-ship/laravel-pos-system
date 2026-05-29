@@ -31,19 +31,27 @@ class CustomerController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
+{
+    $validated = $request->validate(
+        [
             'name' => 'required|max:255',
             'phone' => 'nullable|max:255',
             'memo' => 'nullable|max:1000',
-        ]);
+        ],
+        [],
+        [
+            'name' => '顧客名',
+            'phone' => '電話番号',
+            'memo' => 'メモ',
+        ]
+    );
 
-        Customer::create($validated);
+    Customer::create($validated);
 
-        return redirect()
-            ->route('customers.index')
-            ->with('success', '顧客を登録しました');
-    }
+    return redirect()
+        ->route('customers.index')
+        ->with('success', '顧客を登録しました');
+}
     public function show(Customer $customer)
     {
         $sales = Sale::with('product')
@@ -70,16 +78,24 @@ class CustomerController extends Controller
     }
     public function update(Request $request, Customer $customer)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'max:255'],
-            'phone' => ['nullable', 'max:255'],
-            'memo' => ['nullable'],
-        ]);
+        $validated = $request->validate(
+            [
+                'name' => 'required|max:255',
+                'phone' => 'nullable|max:255',
+                'memo' => 'nullable|max:1000',
+            ],
+            [],
+            [
+                'name' => '顧客名',
+                'phone' => '電話番号',
+                'memo' => 'メモ',
+            ]
+        );
 
         $customer->update($validated);
 
         return redirect()
-            ->route('customers.show', $customer)
+            ->route('customers.show', $customer->id)
             ->with('success', '顧客情報を更新しました');
     }
 }

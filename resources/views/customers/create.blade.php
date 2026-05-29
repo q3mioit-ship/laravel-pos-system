@@ -18,6 +18,11 @@
         </a>
 
     </div>
+    @if ($errors->any())
+        <div class="mb-4 rounded-lg bg-red-100 border border-red-300 p-4 text-red-700">
+            入力内容を確認してください。
+        </div>
+    @endif
     <form action="{{ route('customers.store') }}" method="POST">
 
         @csrf
@@ -29,6 +34,11 @@
                 name="name"
                 :value="old('name')"
             />
+            @error('name')
+                <p class="text-red-500 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
 
         <div class="mb-4">

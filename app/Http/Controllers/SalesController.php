@@ -40,6 +40,8 @@ class SalesController extends Controller
                 ])
                 ->withInput();
         }
+        $errors = [];
+
         foreach ($validated['product_id'] as $index => $productId) {
 
             $product = Product::findOrFail($productId);
@@ -47,12 +49,15 @@ class SalesController extends Controller
             $quantity = $validated['quantity'][$index];
 
             if ($product->stock < $quantity) {
-                return back()
-                    ->withErrors([
-                        'quantity' => "{$product->name} の在庫数を超えています。",
-                    ])
-                    ->withInput();
+                $errors["quantity.$index"] =
+                    "{$product->name} の在庫数を超えています。";
             }
+        }
+
+        if (!empty($errors)) {
+            return back()
+                ->withErrors($errors)
+                ->withInput();
         }
 
         foreach ($validated['product_id'] as $index => $productId) {

@@ -17,7 +17,11 @@
         </a>
 
     </div>
-
+    @if ($errors->any())
+        <div class="mb-4 rounded-lg bg-red-100 border border-red-300 p-4 text-red-700">
+            入力内容を確認してください。
+        </div>
+    @endif
     <form action="{{ route('sales.store') }}" method="POST" class="space-y-6">
         @csrf
         @error('product_id')
@@ -58,6 +62,11 @@
                         min="1"
                         class="w-full border rounded-lg px-4 py-3"
                     >
+                    @error("quantity.$index")
+                        <p class="text-red-500 text-sm mt-2">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
                 <div class="flex justify-end">

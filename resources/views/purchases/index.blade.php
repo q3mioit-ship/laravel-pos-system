@@ -16,12 +16,6 @@
         </a>
     </div>
 
-    @if(session('success'))
-        <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
-
     {{-- スマホ表示 --}}
     <div class="space-y-4 md:hidden">
 

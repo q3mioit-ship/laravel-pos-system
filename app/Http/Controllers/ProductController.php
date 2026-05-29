@@ -41,26 +41,37 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+   public function store(Request $request)
+{
+    $request->validate(
+        [
+            'name' => 'required',
+            'stock' => 'required|integer',
+            'cost_price' => 'required|integer',
+            'sale_price' => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
+        ],
+        [],
+        [
+            'name' => '商品名',
+            'stock' => '在庫数',
+            'cost_price' => '仕入価格',
+            'sale_price' => '販売価格',
+            'category_id' => 'カテゴリ',
+        ]
+    );
 
-    $request->validate([
-        'name' => 'required',
-        'stock' => 'required|integer',
-        'cost_price' => 'required|integer',
-        'sale_price' => 'required|integer',
-        'category_id' => 'required|exists:categories,id',
+    Product::create([
+        'name' => $request->name,
+        'stock' => $request->stock,
+        'cost_price' => $request->cost_price,
+        'sale_price' => $request->sale_price,
+        'category_id' => $request->category_id,
     ]);
-        Product::create([
-            'name' => $request->name,
-            'stock' => $request->stock,
-            'cost_price' => $request->cost_price,
-            'sale_price' => $request->sale_price,
-            'category_id' => $request->category_id,
-        ]);
 
-        return redirect('/products');
-    }
+    return redirect('/products')
+        ->with('success', '商品を登録しました');
+}
 
     /**
      * Display the specified resource.
@@ -70,6 +81,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         return view('products.show', compact('product'));
+
     }
 
     /**
@@ -106,14 +118,18 @@ class ProductController extends Controller
             'sale_price' => $request->sale_price,
         ]);
 
-        return redirect('/products/' . $product->id);
+         return redirect()
+        ->route('products.show', $product->id)
+        ->with('success', '商品を更新しました');
     }
     public function increaseStock(Product $product)
     {
         $product->stock = $product->stock + 1;
         $product->save();
 
-        return redirect()->route('products.show', $product->id);
+        return redirect()
+            ->route('products.show', $product->id)
+            ->with('success', '在庫を追加しました');
     }
     public function decreaseStock(Request $request, Product $product)
     {
@@ -125,7 +141,9 @@ class ProductController extends Controller
 
         $product->decrement('stock', $qty);
 
-        return redirect()->route('products.show', $product->id);
+        return redirect()
+            ->route('products.show', $product->id)
+            ->with('success', '在庫を減らしました');
     }
     /**
      * Remove the specified resource from storage.
@@ -136,6 +154,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect('/products');
+        return redirect('/products')
+            ->with('success', '商品を削除しました。');
     }
 }
